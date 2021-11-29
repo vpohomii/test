@@ -12,14 +12,12 @@ pipeline {
             }
         }
         stage("Building Docker Image") {
-                stage("build") {
                     steps {
                         dockerfile {
                         filename 'Dockerfile'
                         label 'demo-vn'
                         }
                     }    
-                }
         }        
         stage("testing") {
             steps { 
