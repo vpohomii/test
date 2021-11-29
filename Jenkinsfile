@@ -21,7 +21,7 @@ pipeline {
         }        
         stage("testing") {
             steps { 
-                prinln: "Hello Docker!"
+               echo 'Hello Docker!'
             }
         } 
     }
