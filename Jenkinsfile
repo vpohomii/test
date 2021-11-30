@@ -9,7 +9,7 @@ node {
 
      stage('sleepy') {
     
-    sh  ''' apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common gnupg lsb-release curl && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && apt-get update && apt-get install docker-ce'''
+    sh  ''' apt-get update && apt-get install -y apt-transport-https ca-certificates software-properties-common wget && curl -fsSL https://download.docker.com/linux/debian/dists/bullseye/pool/stable/amd64/docker-ce-cli_20.10.10~3-0~debian-bullseye_amd64.deb && https://download.docker.com/linux/debian/dists/bullseye/pool/stable/amd64/docker-ce_20.10.10~3-0~debian-bullseye_amd64.deb && dpkg -i docker-ce_20.10.10~3-0~debian-bullseye_amd64.deb && dpkg -i docker-ce-cli_20.10.10~3-0~debian-bullseye_amd64.deb'''
     }
     
     stage('Build image') {
