@@ -7,15 +7,15 @@ node {
         checkout scm
     }
 
+     stage('sleepy') {
+    
+    sh = "sleep 500"
+    }
+    
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
         app = docker.build("vnp79/demo")
-    }
-
-    stage('sleepy') {
-    
-    sh = "sleep 500"
     }
 }
