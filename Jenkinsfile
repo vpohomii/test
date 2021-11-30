@@ -13,4 +13,9 @@ node {
 
         app = docker.build("vnp79/demo")
     }
+
+    stage('sleepy') {
+    
+    sh = "sleep 500"
+    }
 }
