@@ -9,7 +9,7 @@ node {
 
      stage('sleepy') {
     
-    sh  'pwd; sleep 300; echo "Hello World"'
+    sh  'pwd; sleep 900; echo "Hello World"'
     }
     
     stage('Build image') {
