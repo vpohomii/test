@@ -23,6 +23,7 @@ pipeline {
         stage('docker'){
             steps {
                  sh 'docker version && pwd && ls -la  && docker build -t demo:1.${BUILD_NUMBER} .'
+                  sh 'echo  Hello Docker! '
             }
         }
     }
