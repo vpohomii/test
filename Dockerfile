@@ -4,7 +4,7 @@
   COPY application/ .
   # installing tools and extracting dependencies to the file 
   # Install dependencies, application, adding non-root user and group, change permissions
-  RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt && python3 setup.py install \
+  RUN pip install --default-timeout=1000 --no-cache-dir --upgrade pip && pip install --no-cache-dir -r requirements.txt && python3 setup.py install \
                          && addgroup -g 10001 pyapp \
                          && adduser -D -h /usr/src/app -u 10000  pyapp -G pyapp \ 
                          && chown pyapp:pyapp /usr/src/app  \
