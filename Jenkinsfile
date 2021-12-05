@@ -39,7 +39,7 @@ pipeline {
         stage('docker'){
             steps {
               script {
-                 docker.build registry + ":$BUILD_NUMBER"
+                 docker.build('pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker:$BUILD_NUMBER')
               }
             }
         }
@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                   docker.withRegistry("pohomiy.jfrog.io/artifactory/", "jftoken") {
-                    docker.push("1.${env.BUILD_NUMBER}")
+                    docker.push("${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
                   }
