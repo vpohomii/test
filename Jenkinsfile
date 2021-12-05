@@ -25,7 +25,7 @@ pipeline {
              rtServer (
              id: "jFrog",
              url: "https://pohomiy.jfrog.io/artifactory/",
-             credentialsId: "jf-token"
+             credentialsId: "jftoken"
            )    
            }
        }
@@ -46,7 +46,7 @@ pipeline {
         stage ('Push image to Artifactory') {
             steps {
                 script {
-                  docker.withRegistry("pohomiy.jfrog.io/artifactory/", "jf-token") {
+                  docker.withRegistry("pohomiy.jfrog.io/artifactory/", "jftoken") {
                     docker.push("1.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
