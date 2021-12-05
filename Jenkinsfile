@@ -1,10 +1,12 @@
 pipeline {
   environment {
     registry = "https://pohomiy.jfrog.io/artifactory/"
+    
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
     registryCredential2 = 'jf'
-    imagename = 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker'
+    registryCredentiald = 'dh'
+    imagename = 'vnp79/pyapp'
     dockerImage = ''
   }   
   agent {
@@ -35,7 +37,7 @@ pipeline {
       
        stage('git') {
              steps {
-               git branch: 'main', url: 'https://github.com/vpohomii/test.git'
+               git branch: 'kOps', url: 'https://github.com/vpohomii/test.git'
              }
        }
 
@@ -49,7 +51,7 @@ pipeline {
         stage('Deploy Image') {
             steps{
               script {
-                docker.withRegistry( registry, registryCredential ) {
+                docker.withRegistry( '', registryCredentiald ) {
                 dockerImage.push('0.${env.BUILD_NUMBER}')
                 dockerImage.push('latest')
                 }
