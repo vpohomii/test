@@ -21,38 +21,46 @@ pipeline {
              id: "jFrog",
              url: "https://pohomiy.jfrog.io/artifactory/",
              credentialsId: "jf-token"
-           )    }}
+           )    
+           }
+       }
       
-      
-      
-        stage('git') {
-            steps {
-                git branch: 'main', url: 'https://github.com/vpohomii/test.git'
-            }
-        }
+       stage('git') {
+             steps {
+               git branch: 'main', url: 'https://github.com/vpohomii/test.git'
+             }
+       }
+
         stage('docker'){
             steps {
               script {
                  docker.build('pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker')
               }
+            }
         }
-    }
         stage ('Push image to Artifactory') {
             steps {
-                rtDockerPush(
-                    serverId: "Artifactory",
-                    image: 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker',
-                    targetRepo: 'default-docker-local',
-                    // Attach custom properties to the published artifacts:
-                    properties: 'project-name=docker-dummy;status=testing'
-                )
+                script {
+                  docker.withRegistry('pohomiy.jfrog.io/artifactory/', 'jFrog') {
+                    docker.push("1.${env.BUILD_NUMBER}")
+                    docker.push("latest")  
+
+                }
+
+/                rtDockerPush(
+/                    serverId: "jFrog",
+/                    image: 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker',
+/                    targetRepo: 'default-docker-local',
+/                    // Attach custom properties to the published artifacts:
+/                    properties: 'project-name=docker-dummy;status=testing'
+/                )
             }
         }
 
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "Artifactory"
+                    serverId: "jFrog"
                 )
             }
         }
