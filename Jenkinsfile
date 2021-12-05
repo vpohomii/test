@@ -6,7 +6,7 @@ pipeline {
 
   agent {
     kubernetes { 
-        yaml ''' 
+        yaml '''  
     apiVersion: v1
     kind: Pod
     spec:
@@ -46,7 +46,7 @@ pipeline {
         stage ('Push image to Artifactory') {
             steps {
                 script {
-                  docker.withRegistry("pohomiy.jfrog.io/artifactory/", "jftoken") {
+                  docker.withRegistry('https://pohomiy.jfrog.io/artifactory/', 'jfusernamepass') {
                     docker.push("0.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
