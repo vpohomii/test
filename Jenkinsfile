@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "https://pohomiy.jfrog.io"
+    registry = "pohomiy.jfrog.io/artifactory/"
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
     registryCredential2 = 'jf'
@@ -50,7 +50,7 @@ pipeline {
         stage('Deploy Image') {
             steps{
               script {
-                docker.withRegistry( registry, registryCredential2 ) {
+                docker.withRegistry( registry, registryCredential1 ) {
                 dockerImage.push("0.$BUILD_NUMBER")
                 dockerImage.push('latest')
                 }
