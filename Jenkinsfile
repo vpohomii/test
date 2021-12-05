@@ -2,6 +2,7 @@ pipeline {
   environment {
     registry = "pohomiy.jfrog.io/artifactory/"
     registryCredential = 'jfusernamepass'
+    registryCredential1 = 'jftoken'
   }   
 
   agent {
@@ -25,7 +26,7 @@ pipeline {
              rtServer (
              id: "jFrog",
              url: "https://pohomiy.jfrog.io/artifactory/",
-             credentialsId: "jfusernamepass"
+             credentialsId: "jftoken"
            )    
            }
        }
@@ -46,7 +47,7 @@ pipeline {
         stage ('Push image to Artifactory') {
             steps {
                 script {
-                  docker.withRegistry('https://pohomiy.jfrog.io/artifactory/', 'jfusernamepass') {
+                  docker.withRegistry('https://pohomiy.jfrog.io/artifactory/', 'jftoken') {
                     docker.push("0.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
