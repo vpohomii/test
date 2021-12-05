@@ -45,18 +45,10 @@ pipeline {
                     docker.push("1.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
+                  }
                 }
-
-//                rtDockerPush(
-//                    serverId: "jFrog",
-//                    image: 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker',
-//                    targetRepo: 'default-docker-local',
-//                    // Attach custom properties to the published artifacts:
-//                    properties: 'project-name=docker-dummy;status=testing'
-//                )
             }
-        }
-
+        }            
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
