@@ -41,7 +41,7 @@ pipeline {
         stage ('Push image to Artifactory') {
             steps {
                 script {
-                  docker.withRegistry('pohomiy.jfrog.io/artifactory/', 'jFrog') {
+                  docker.withRegistry('pohomiy.jfrog.io/artifactory/', 'jf-token') {
                     docker.push("1.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
