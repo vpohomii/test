@@ -1,12 +1,12 @@
 pipeline {
   environment {
-    registry = "pohomiy.jfrog.io/artifactory/"
+    registry = "https://pohomiy.jfrog.io/artifactory/"
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
     registryCredential2 = 'jf'
     imagename = 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker'
     dockerImage = ''
-  }       
+  }   
   agent {
     kubernetes { 
         yaml '''  
