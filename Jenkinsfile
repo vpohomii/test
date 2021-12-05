@@ -15,6 +15,16 @@ pipeline {
     }
   }
     stages {
+       stage('conf') {
+           steps {
+             rtServer (
+             id: "jFrog",
+             url: "https://pohomiy.jfrog.io/artifactory/",
+             credentialsId: "jf-token"
+           )    }}
+      
+      
+      
         stage('git') {
             steps {
                 git branch: 'main', url: 'https://github.com/vpohomii/test.git'
@@ -22,9 +32,29 @@ pipeline {
         }
         stage('docker'){
             steps {
-                 sh 'docker version && pwd && ls -la  && docker build -t demo:1.${BUILD_NUMBER} .'
-                  sh 'echo  Hello Docker! '
-            }
+              script {
+                 docker.build('pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker')
+              }
         }
     }
+        stage ('Push image to Artifactory') {
+            steps {
+                rtDockerPush(
+                    serverId: "Artifactory",
+                    image: 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker',
+                    targetRepo: 'default-docker-local',
+                    // Attach custom properties to the published artifacts:
+                    properties: 'project-name=docker-dummy;status=testing'
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "Artifactory"
+                )
+            }
+        }
+    }    
 }
