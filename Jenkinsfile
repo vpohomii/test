@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "pohomiy.jfrog.io/artifactory/"
-    registryCredential = 'jftoken'
+    registryCredential = 'jfusernamepass'
   }   
 
   agent {
@@ -25,7 +25,7 @@ pipeline {
              rtServer (
              id: "jFrog",
              url: "https://pohomiy.jfrog.io/artifactory/",
-             credentialsId: "jftoken"
+             credentialsId: "jfusernamepass"
            )    
            }
        }
