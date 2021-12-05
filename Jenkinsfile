@@ -4,9 +4,6 @@ pipeline {
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
     image = 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker'
-
-
-
   }   
 
   agent {
@@ -44,19 +41,29 @@ pipeline {
         stage('docker'){
             steps {
               script {
-                 MyImage = docker.build image
+                 MyImage = docker.build('pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker:0.${env.BUILD_NUMBER}')
               }
             }
         }
         stage ('Push image to Artifactory') {
             steps {
-                script {
-                  docker.withRegistry('https://pohomiy.jfrog.io/artifactory/', 'jftoken') {
-                    MyImage.push("0.${env.BUILD_NUMBER}")
-                    MyImage.push("latest")  
-                  }
+              rtDockerPush(
+                    serverId: "jFrog",
+                    image: 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker:0.${env.BUILD_NUMBER}',
+                    targetRepo: 'fine-docker-local',
+                )
                 }
             }
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "jFrog"
+                )
+            }
+        }
+
+
+
         }            
 
     }    
