@@ -3,7 +3,7 @@ pipeline {
     registry = "pohomiy.jfrog.io/artifactory/"
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
-
+    image = 'pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker'
 
 
 
