@@ -1,4 +1,9 @@
 pipeline {
+  environment {
+    registry = "pohomiy.jfrog.io/artifactory/"
+    registryCredential = ‘jf-token’
+  }   
+
   agent {
     kubernetes { 
         yaml ''' 
@@ -34,14 +39,14 @@ pipeline {
         stage('docker'){
             steps {
               script {
-                 docker.build('pohomiy.jfrog.io/artifactory/fine-docker-local/fine-docker')
+                 docker.build registry + ":1.+$BUILD_NUMBER"
               }
             }
         }
         stage ('Push image to Artifactory') {
             steps {
                 script {
-                  docker.withRegistry('pohomiy.jfrog.io/artifactory/', 'jf-token') {
+                  docker.withRegistry("pohomiy.jfrog.io/artifactory/", "jf-token") {
                     docker.push("1.${env.BUILD_NUMBER}")
                     docker.push("latest")  
 
