@@ -1,7 +1,7 @@
 pipeline {
   environment {
     registry = "pohomiy.jfrog.io/artifactory/"
-    registryCredential = ‘jftoken’
+    registryCredential = 'jftoken'
   }   
 
   agent {
