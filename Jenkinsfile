@@ -11,17 +11,9 @@ pipeline {
   }   
   agent {
     kubernetes { 
-        yaml '''  
-    apiVersion: v1
-    kind: Pod
-    spec:
-     containers:    
-     - name: docker
-       image: docker:19.03.1-dind
-       securityContext:
-         privileged: true  
-        '''
-      defaultContainer 'docker'
+    label 'docker'
+    yamlFile 'docker.yaml'
+    defaultContainer 'docker'
     }
   }
     stages {
