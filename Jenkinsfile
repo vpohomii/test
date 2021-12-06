@@ -28,11 +28,11 @@ pipeline {
            }
        }
       
-       stage('git') {
+        stage('git') {
              steps {
                git branch: 'kOps', url: 'https://github.com/vpohomii/test.git'
              }
-       }
+        }
 
         stage('docker'){
             steps {
@@ -41,6 +41,7 @@ pipeline {
               }
             }
         }
+        
         stage('Deploy Image') {
             steps{
               script {
@@ -50,14 +51,18 @@ pipeline {
               }
             }
         }
-        stage('Send slack notification')
+        
+        stage('Send slack notification') {
             steps{
          slackSend color: 'good', message: 'Docker Image version: 'release' Builded end Pushed'
             }  
+        }
+
         stage('Prepare to deploy To K8s')
             steps{
               sh "sed -i 's/latest/release/' ./yaml/deploy.yaml"
             }
+
         stage('K8s Rolling Update'){
             steps{
               script {
