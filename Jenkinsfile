@@ -17,6 +17,7 @@ pipeline {
     defaultContainer 'docker'
     }
   }
+
     stages {
        stage('conf') {
            steps {
