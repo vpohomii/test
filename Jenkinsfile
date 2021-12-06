@@ -8,6 +8,7 @@ pipeline {
     registryCredentiald = 'dh'
     imagename = 'vnp79/pyapp'
     dockerImage = ''
+    relase = "0.${env.BUILD_NUMBER}"
   }   
   agent {
     kubernetes { 
@@ -44,11 +45,25 @@ pipeline {
             steps{
               script {
                 docker.withRegistry( '', registryCredentiald ) {
-                dockerImage.push("0.${env.BUILD_NUMBER}")
-                dockerImage.push('latest')
+                dockerImage.push('release')
                 }
               }
             }
-        }  
+        }
+        stage('Send slack notification')
+            steps{
+         slackSend color: 'good', message: 'Docker Image version: 'release' Builded end Pushed'
+            }  
+        stage('Prepare to deploy To K8s')
+            steps{
+              sh "sed -i 's/latest/release/' ./yaml/deploy.yaml"
+            }
+        stage('K8s Rolling Update'){
+            steps{
+              script {
+                kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "kubernetes")
+              }
+            }
+        }    
       }            
 }
