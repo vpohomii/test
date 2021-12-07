@@ -53,10 +53,11 @@ pipeline {
             }
         }
 
-        stage('Prepare to deploy To K8s')
+        stage('Prepare to deploy To K8s') {
             steps{
               sh "sed -i 's/latest/release/' ./yaml/deploy.yaml"
             }
+        }
 
         stage('K8s Rolling Update'){
             steps{
@@ -65,10 +66,7 @@ pipeline {
               }
             }
         }
-        stage('Send slack notification') {
-            steps{
-               slackSend color: 'good', message: 'Docker Image version: 'release' Builded end Pushed'
-            }  
+
         }      
       }            
 }
