@@ -52,12 +52,6 @@ pipeline {
               }
             }
         }
-        
-        stage('Send slack notification') {
-            steps{
-         slackSend color: 'good', message: 'Docker Image version: 'release' Builded end Pushed'
-            }  
-        }
 
         stage('Prepare to deploy To K8s')
             steps{
@@ -70,6 +64,11 @@ pipeline {
                 kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "kubernetes")
               }
             }
-        }    
+        }
+        stage('Send slack notification') {
+            steps{
+               slackSend color: 'good', message: 'Docker Image version: 'release' Builded end Pushed'
+            }  
+        }      
       }            
 }
