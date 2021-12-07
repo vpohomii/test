@@ -56,7 +56,7 @@ pipeline {
         stage('Prepare to deploy To K8s') {
             steps{
               sh "sed -i 's/latest/${env.BUILD_NUMBER}/g' ./yaml/deploy.yaml"
-              sh 'cp ./yaml/deploy.yaml deploy.yaml && cat deploy.yaml '      
+              sh 'cp ./yaml/deploy.yaml deploy.yaml'      
             }
         }
 
