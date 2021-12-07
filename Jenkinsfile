@@ -55,7 +55,7 @@ pipeline {
 
         stage('Prepare to deploy To K8s') {
             steps{
-              sh '''sed -i 's/latest/"${env.BUILD_NUMBER}"/g' ./yaml/deploy.yaml'''
+              sh "sed -i 's/latest/${env.BUILD_NUMBER}/g' ./yaml/deploy.yaml"
               sh 'cat ./yaml/deploy.yaml'      
             }
         }
@@ -66,7 +66,7 @@ pipeline {
                  // withCredentials([file(credentialsId: 'k8s', variable: 'KUBECONFIG')]) {
                   // change context with related namespace
                 //  sh '''kubectl config set-context $(kubectl config current-context)'''
-                kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "k8s")
+                kubernetesDeploy(configs: './yaml/deploy.yaml', kubeconfigId: "k8s")
                 
               }
             }
