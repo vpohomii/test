@@ -13,7 +13,7 @@ pipeline {
   agent {
     kubernetes { 
     label 'docker'
-    yamlFile 'docker.yaml'
+    yamlFile './yaml/docker.yaml'
     defaultContainer 'docker'
     }
   }
