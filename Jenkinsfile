@@ -47,7 +47,7 @@ pipeline {
             steps{
               script {
                 docker.withRegistry( '', registryCredentiald ) {
-                dockerImage.push("0.${env.BUILD_NUMBER}")
+                dockerImage.push("${env.BUILD_NUMBER}")
                 }
               }
             }
@@ -55,7 +55,7 @@ pipeline {
 
         stage('Prepare to deploy To K8s') {
             steps{
-              sh '''sed -i 's/latest/0.${env.BUILD_NUMBER/' ./yaml/deploy.yaml'''
+              sh "sed -i 's/latest/${env.BUILD_NUMBER/g' ./yaml/deploy.yaml"
             }
         }
 
