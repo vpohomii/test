@@ -1,14 +1,10 @@
 pipeline {
   environment { 
-    registry = "https://pohomiy.jfrog.io/artifactory/"
-    
-    registryCredential = 'jfusernamepass'
-    registryCredential1 = 'jftoken'
-    registryCredential2 = 'jf'
+
     registryCredentiald = 'dh1'
     imagename = 'vnp79/pyapp'
     dockerImage = ''
-    relase = "0.${env.BUILD_NUMBER}"
+    
   }   
   agent {
     kubernetes { 
@@ -19,16 +15,6 @@ pipeline {
   }
 
     stages {
-       stage('conf') {
-           steps {
-             rtServer (
-             id: "jFrog",
-             url: "https://pohomiy.jfrog.io/artifactory/",
-             credentialsId: "jftoken"
-           )    
-           }
-       }
-      
         stage('git') {
              steps {
                git branch: 'kOps', url: 'https://github.com/vpohomii/test.git'
