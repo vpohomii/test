@@ -62,7 +62,7 @@ pipeline {
         stage('K8s Rolling Update'){
             steps{
               script {
-                kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "kubernetes")
+                kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "")
               }
             }
         }
