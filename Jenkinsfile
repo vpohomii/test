@@ -62,9 +62,9 @@ pipeline {
         stage('K8s Rolling Update'){
             steps{
               script {
-                  withCredentials([file(credentialsId: 'kub', variable: 'KUBECONFIG')]) {
+                  withCredentials([file(credentialsId: 'k8s', variable: 'KUBECONFIG')]) {
                   // change context with related namespace
-                  sh '''kubectl config set-context $(kubectl config current-context)'''
+                  sh '''kubectl config set-context $(kubectl config current-context)'''jenkinsfile
                 kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "k8s")
                   }
               }
