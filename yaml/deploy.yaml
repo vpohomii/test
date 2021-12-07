@@ -24,7 +24,7 @@ spec:
         app: pyapp
     spec:
       containers:
-      - image: vnp79/pyapp:0.2
+      - image: vnp79/pyapp:latest
         name: pyapp
         resources:
           requests:
