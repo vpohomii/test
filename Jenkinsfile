@@ -5,7 +5,7 @@ pipeline {
     registryCredential = 'jfusernamepass'
     registryCredential1 = 'jftoken'
     registryCredential2 = 'jf'
-    registryCredentiald = 'dh'
+    registryCredentiald = 'dh1'
     imagename = 'vnp79/pyapp'
     dockerImage = ''
     relase = "0.${env.BUILD_NUMBER}"
