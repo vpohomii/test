@@ -64,8 +64,9 @@ pipeline {
               script {
                   withCredentials([file(credentialsId: 'kub', variable: 'KUBECONFIG')]) {
                   // change context with related namespace
-                  sh "kubectl config set-context $(kubectl config current-context) --namespace=${namespace}"
+                  sh "kubectl config set-context ${kubectl config current-context}"
                 kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "kub")
+                  }
               }
             }
         }
