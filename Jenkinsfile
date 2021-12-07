@@ -47,7 +47,7 @@ pipeline {
             steps{
               script {
                 docker.withRegistry( '', registryCredentiald ) {
-                dockerImage.push('release')
+                dockerImage.push(release)
                 }
               }
             }
@@ -62,11 +62,11 @@ pipeline {
         stage('K8s Rolling Update'){
             steps{
               script {
-                  withCredentials([file(credentialsId: 'k8s', variable: 'KUBECONFIG')]) {
+                 // withCredentials([file(credentialsId: 'k8s', variable: 'KUBECONFIG')]) {
                   // change context with related namespace
-                  sh '''kubectl config set-context $(kubectl config current-context)'''jenkinsfile
+                //  sh '''kubectl config set-context $(kubectl config current-context)'''
                 kubernetesDeploy(configs: "./yaml/deploy.yaml", kubeconfigId: "k8s")
-                  }
+                
               }
             }
         }
