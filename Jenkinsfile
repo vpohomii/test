@@ -47,7 +47,7 @@ pipeline {
             steps{
               script {
                 docker.withRegistry( '', registryCredentiald ) {
-                dockerImage.push("0.${env.BUILD_NUMBER")
+                dockerImage.push("0.${env.BUILD_NUMBER}")
                 }
               }
             }
